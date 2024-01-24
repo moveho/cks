@@ -1,0 +1,1 @@
+kubectl create token observer-user -n kubernetes-dashboard --duration 0s
