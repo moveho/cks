@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: backend
+  name: denied
+spec:
+  containers:
+  - image: busybox:1.36.0
+    name: web
+    command:
+    - wget
+    - http://google.com
+    - --timeout=5
+    - --tries=1
+  restartPolicy: Never
+status: {}
+

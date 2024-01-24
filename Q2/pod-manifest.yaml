@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allow
+  labels:
+    app: frontend
+spec:
+  containers:
+  - name: allow
+    image: busybox:1.36.0
+    command: ["/bin/sh", "-c", "wget http://google.com --timeout=5 --tries=1; sleep infinity"]
+  restartPolicy: Never
+
