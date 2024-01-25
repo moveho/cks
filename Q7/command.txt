@@ -1,0 +1,6 @@
+openssl genrsa -out jill.key 2048
+
+openssl req -new -key jill.key -out jill.csr -subj "/CN=jill/O=observer"
+
+cat jill.csr | base64 | tr -d "\n"
+
