@@ -1,0 +1,3 @@
+ kubectl create role observer --verb=create --verb=get --verb=list --verb=watch --resource=pods --resource=configmaps --resource=secrets
+kubectl create rolebinding observer-binding --role=observer --group=observer
+

@@ -1,0 +1,39 @@
+#context 변환
+root@dh-test-master:~/cks/Q9# kubectl config use-context jill
+Switched to context "jill".
+
+#현재 context 확인
+root@dh-test-master:~/cks/Q9# kubectl config current-context jill
+jill
+
+# configmap 및 node 조회 시 실패 (권한 X)
+root@dh-test-master:~/cks/Q9# kubectl get configmaps
+E0125 04:18:42.747367 1065076 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:18:42.748349 1065076 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:18:42.750303 1065076 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:18:42.752101 1065076 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:18:42.753600 1065076 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+root@dh-test-master:~/cks/Q9# kubectl get no
+E0125 04:19:23.210008 1065361 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:19:23.210482 1065361 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:19:23.212987 1065361 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:19:23.214496 1065361 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+E0125 04:19:23.215995 1065361 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+
+
+#원래 Admin context로전환
+root@dh-test-master:~/cks/Q9# kubectl config get-contexts  
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         jill                          minikube     jill               
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+root@dh-test-master:~/cks/Q9# kubectl config use-context kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+
+#정상 조회 가능
+root@dh-test-master:~/cks/Q9# kubectl get no
+NAME             STATUS   ROLES           AGE    VERSION
+dh-test-master   Ready    control-plane   2d3h   v1.28.2
+dh-test-w1       Ready    <none>          2d3h   v1.28.2
+dh-test-w2       Ready    <none>          2d3h   v1.28.2
